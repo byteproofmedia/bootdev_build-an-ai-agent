@@ -1,5 +1,6 @@
 import os
 import argparse
+from tabnanny import verbose
 
 from dotenv import load_dotenv
 from openai import OpenAI
@@ -20,6 +21,7 @@ def main():
 
     parser = argparse.ArgumentParser(description="AI Agent")
     parser.add_argument("prompt", type=str, help="AI Prompt")
+    parser.add_argument("--verbose", action="store_true", help="Enable verbose output")
     args = parser.parse_args()
     # prompt: str = "Why is Boot.dev such a great place to learn backend development? Use one paragraph maximum."
 
@@ -34,9 +36,10 @@ def main():
     if response.usage == None:
         raise RuntimeError("Invalid response")
 
-    print(f"User prompt: {args.prompt}")
-    print(f"Prompt tokens: {response.usage.prompt_tokens}")
-    print(f"Response tokens: {response.usage.completion_tokens}")
+    if args.verbose:
+        print(f"User prompt: {args.prompt}")
+        print(f"Prompt tokens: {response.usage.prompt_tokens}")
+        print(f"Response tokens: {response.usage.completion_tokens}")
     print(f"Response:\n{response.choices[0].message.content}")
 
 
