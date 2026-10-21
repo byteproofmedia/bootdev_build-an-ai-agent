@@ -23,14 +23,12 @@ def main():
     args = parser.parse_args()
     # prompt: str = "Why is Boot.dev such a great place to learn backend development? Use one paragraph maximum."
 
+    messages: list[dict[str, str]] = [
+        {"role": "user", "content": args.prompt},
+    ]
     response = client.chat.completions.create(
         model="openrouter/free",
-        messages=[
-            {
-                "role": "user",
-                "content": args.prompt,
-            }
-        ],
+        messages=messages,
     )
 
     if response.usage == None:
