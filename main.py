@@ -1,9 +1,11 @@
 import os
 import argparse
+
 from tabnanny import verbose
 
 from dotenv import load_dotenv
 from openai import OpenAI
+from prompts import system_prompt
 
 
 def main():
@@ -26,6 +28,7 @@ def main():
     # prompt: str = "Why is Boot.dev such a great place to learn backend development? Use one paragraph maximum."
 
     messages: list[dict[str, str]] = [
+        {"role": "system", "content": system_prompt},
         {"role": "user", "content": args.prompt},
     ]
     response = client.chat.completions.create(
