@@ -24,16 +24,15 @@ def get_files_info(working_directory: str, directory: str = ".") -> str:
     if is_directory == False:
         return f'Error: "{directory}" is not a directory'
 
-    if valid_target_dir == True:
-        dir_items = os.listdir(target_dir)
-        response = []
-        for item in dir_items:
-            try:
-                response.append(f'- {item}: file_size={os.path.getsize(os.path.normpath(os.path.join(target_dir, item)))}, is_dir={os.path.isdir(os.path.normpath(os.path.join(target_dir, item)))}')
-            except Exception as e:
-                return f'Error: "{item}" caused - {e}'
+    dir_items = os.listdir(target_dir)
+    response = []
+    for item in dir_items:
+        try:
+            response.append(f'- {item}: file_size={os.path.getsize(os.path.normpath(os.path.join(target_dir, item)))}, is_dir={os.path.isdir(os.path.normpath(os.path.join(target_dir, item)))}')
+        except Exception as e:
+            return f'Error: "{item}" caused - {e}'
 
-        response = "\n".join(response)
+    response = "\n".join(response)
 
-        # return f'Success: "{directory}" is within the working directory'
-        return response
+    # return f'Success: "{directory}" is within the working directory'
+    return response
