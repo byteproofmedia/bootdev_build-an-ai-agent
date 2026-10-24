@@ -2,6 +2,25 @@ import os
 
 from config import MAX_CHARS
 
+schema_get_file_content = {
+    "type": "function",
+    "function": {
+        "name": "get_file_content",
+        "description": f"Gets the contents of a file relative to the working directory, with a max response of {MAX_CHARS} characters.",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "required": {
+                    "file_path": {
+                        "type": "string",
+                        "description": "File path to load content from, relative to the working directory.",
+                    },
+                },
+            },
+        },
+    },
+}
+
 def get_file_content(working_directory: str, file_path: str) -> str:
     try:
         abs_path = os.path.abspath(working_directory)

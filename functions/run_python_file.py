@@ -1,6 +1,30 @@
 import os
 import subprocess
 
+schema_run_python_file = {
+    "type": "function",
+    "function": {
+        "name": "run_python_file",
+        "description": "Run the specified python file, file path is relative to the working directory.",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "required": {
+                    "file_path": {
+                        "type": "string",
+                        "description": "File path to load content from, relative to the working directory.",
+                    },
+                },
+                "args": {
+                    "type": "array",
+                    "items": "string",
+                    "description": "File path to load content from, relative to the working directory.",
+                },
+            },
+        },
+    },
+}
+
 def run_python_file(
     working_directory: str, file_path: str, args: list[str] | None = None
 ) -> str:
