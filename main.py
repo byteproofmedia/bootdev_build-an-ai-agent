@@ -1,3 +1,4 @@
+from ast import arg
 import os
 import argparse
 import json
@@ -7,7 +8,7 @@ from tabnanny import verbose
 from dotenv import load_dotenv
 from openai import OpenAI
 from prompts import system_prompt
-from functions.call_function import available_functions
+from functions.call_function import available_functions, call_function
 
 
 def main():
@@ -57,7 +58,14 @@ def main():
         if tool_call.type != "function":
                     continue
         function_args = json.loads(tool_call.function.arguments or "{}")
-        print(f"Calling function: {tool_call.function.name}({function_args})")
+
+        result_message = call_function(tool_call, args.verbose)
+
+        if not result_message['content']:
+            raise Exception("Error: call_function response has empty 'content'")
+
+        if args.verbose:
+            print(f"-> {result_message['content']}")
 
 
 if __name__ == "__main__":
